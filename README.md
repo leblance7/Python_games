@@ -1,2 +1,2 @@
-# Python_games
- Create games to demonstrate learning and experiment with python
+# Python-games
+Projects using python to develop simple games to practice and apply learned skills
