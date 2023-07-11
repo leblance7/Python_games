@@ -5,6 +5,7 @@
 # 2) A function that allows the placement of stats and uses the same function to
 # to rename enemys the players will fight against
 #3) Create different stats for enemies using the function enemies()
+#4) Create a class for stats to call upon for characters
 import random
 
 stand_name = input("Enter the name of your stand: ")
@@ -26,13 +27,13 @@ def stand_stats(name: str) -> dict:
 
 # generating enemies for character to fight
 def enemies():
-    enemies = ["strong", "fast", "tough"]
+    enemies = ["strong", "quick", "tough"]
     ##    for x in enemies:
     encounter = random.choice(enemies)
     stats = stand_stats(stand_name)
-    #determing the differe stats of enemies for fast, strong, or tough
+    #determing the differe stats of enemies for quick, strong, or tough
     #Based on stand Silver Chariot
-    if encounter == "fast":
+    if encounter == "quick":
         stats["power"] += random.randint(0, 1)
         stats["speed"] += random.randint(1, 3)
         stats["range"] += random.randint(0, 1)
@@ -63,13 +64,13 @@ def enemies():
         
         
     enemy_stand = {encounter: stats}
-    return enemy_stand
+    return enemy_stand, encounter
 
 
 # creating variable for enemy_stand to be global
 
-enemy_stand = enemies()
-print(enemy_stand)
+##enemy_stand = enemies()
+##print(enemy_stand)
 
 
 ##print(stand)
@@ -140,11 +141,44 @@ def point_placement():
 
 stat = point_placement()
 character = {stand_name: stat}
+enemy_stand, encounter = enemies()
+print(enemy_stand)
 print(character)
 
+#Creating a function that determines which character moves first & how to break a tie
+# Check the random probabilty of moves first
+def moves_first(character, enemy_stand):
+    if character[stand_name]["speed"] > enemy_stand[encounter]["speed"]:
+        print(stand_name, "moves first!")
+        return character
+    elif character[stand_name]["speed"] < enemy_stand[encounter]["speed"]:
+        print(encounter, "moves first!")
+        return enemy_stand
+    elif character[stand_name]["speed"] == enemy_stand[encounter]["speed"]:
+        priority = [character, enemy_stand]
+        priority = random.choice(priority)
+        if priority == character:
+            print(stand_name, "is barely faster!")
+            return priority
+        elif priority == enemy_stand:
+            print(encounter, "is barely faster!")
+            return priority
+         
+    
+print(moves_first(character, enemy_stand))
 # creating new stand enentries for players to fight
 
 ##for x in stand:
 ##    print(x)
 ##    for x in stand["jojo"]:
 ##        print(x, stand_stats[x])
+
+
+
+#from dataclasses import dataclass
+
+#@dataclass
+#class Stats:
+    #power: int = 0
+    #speed: int = 0
+    #range: int = 0
