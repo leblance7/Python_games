@@ -7,6 +7,9 @@
 #3) Create different stats for enemies using the function enemies()
 #4) Create a class for stats to call upon for characters
 import random
+from SBR import SBR
+stat = SBR()
+stat.get_stats()
 
 stand_name = input("Enter the name of your stand: ")
 ##stand = {stand_name: stand_stats}
@@ -24,9 +27,59 @@ def stand_stats(name: str) -> dict:
     }
     return stand_stats
 
+#Chracter point selection function
+
+level = 5
+
+def level_up(): #done
+    stats = stand_stats(stand_name)
+
+    global level
+    print("Please enter the the stat you would like to increase.")
+
+    # creating the for loop to determine which stats your points go into,
+    # resets loop with corrected number to distrubte points and reuturn the updated dictionary
+
+    for x in range(level):
+        skill = input(
+            "Choose from power, p, speed, s, range, r, stamina, st,\n"
+            + "precision, pr, potential, po, or vitality, v: "
+        ).lower()
+
+        # conditional statements of where points will go based on skill input
+
+        print(skill)
+        if skill in ["p", "power"]:
+            stats["power"] += 1
+            level -= 1
+        elif skill in ["s", "speed"]:
+            stats["speed"] += 1
+            level -= 1
+        elif skill in ["r", "range"]:
+            stats["range"] += 1
+            level -= 1
+        elif skill in ["st", "stamina"]:
+            stats["stamina"] += 1
+            level -= 1
+        elif skill in ["pr", "precision"]:
+            stats["precision"] += 1
+            level -= 1
+        elif skill in ["po", "potential"]:
+            stats["potential"] += 1
+            level -= 1
+        elif skill in ["v", "vitality"]:
+            stats["vitality"] += 1
+            level -= 1
+        else:
+            print("points left:", level)
+            if level == 0:
+                break
+
+    return stats  # , level
 
 # generating enemies for character to fight
-def enemies():
+
+def enemies(): # done
     enemies = ["strong", "quick", "tough"]
     ##    for x in enemies:
     encounter = random.choice(enemies)
@@ -75,62 +128,12 @@ def enemies():
 
 ##print(stand)
 
-level = 5
-
 # level_up() alters the local varaible level to be gloabal, print statement
 # Level_up uses the skill input statement in a for loop make a case statement determining
 #  users stats in a dictionary
 
-
-def level_up():
-    stats = stand_stats(stand_name)
-
-    global level
-    print("Please enter the the stat you would like to increase.")
-
-    # creating the for loop to determine which stats your points go into,
-    # resets loop with corrected number to distrubte points and reuturn the updated dictionary
-
-    for x in range(level):
-        skill = input(
-            "Choose from power, p, speed, s, range, r, stamina, st,\n"
-            + "precision, pr, potential, po, or vitality, v: "
-        ).lower()
-
-        # conditional statements of where points will go based on skill input
-
-        print(skill)
-        if skill in ["p", "power"]:
-            stats["power"] += 1
-            level -= 1
-        elif skill in ["s", "speed"]:
-            stats["speed"] += 1
-            level -= 1
-        elif skill in ["r", "range"]:
-            stats["range"] += 1
-            level -= 1
-        elif skill in ["st", "stamina"]:
-            stats["stamina"] += 1
-            level -= 1
-        elif skill in ["pr", "precision"]:
-            stats["precision"] += 1
-            level -= 1
-        elif skill in ["po", "potential"]:
-            stats["potential"] += 1
-            level -= 1
-        elif skill in ["v", "vitality"]:
-            stats["vitality"] += 1
-            level -= 1
-        else:
-            print("points left:", level)
-            if level == 0:
-                break
-
-    return stats  # , level
-
-
 # creating while loop to add lost entries to stats
-def point_placement():
+def point_placement(): #done
     ##    stats = level_up()
     ##    print("stats", stats)
     while level > 0:
